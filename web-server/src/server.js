@@ -7,10 +7,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const expressSession = require('express-session');
 const app = express();
-
-
 
 class Server {
 
