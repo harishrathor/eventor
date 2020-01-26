@@ -3,13 +3,12 @@ class AppController {
 
     requestHandlerAction(req, res) {
         const dbService = new DBService();
-        dbService.insertUser().then((err, resPonse) => {
-            console.log(resPonse);
-            if (err) {
-                res.send({message: 'Error in insertig user.'});
-            } else {
-                res.send({message: 'User Created.'});
-            }
+        dbService.insertUser().then((response) => {
+            console.log('User Created.', response);
+            res.send({success: true, message: 'User Created.', data: response});
+        }).catch(err => {
+            console.log('Error in creating user:', err);
+            res.send({success: false, message: 'Error in insertig user.', data: err});
         });
     }
 }

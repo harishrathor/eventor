@@ -8,7 +8,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const expressSession = require('express-session');
-const MongoStore = require('connect-mongo')(expressSession);
 const app = express();
 
 
@@ -44,10 +43,17 @@ class Server {
 
     _connectDB() {
         const { makeConnection, getConnection } = require('@db');
-        
         makeConnection()
         .then(() => {
-            this.CONFIGS.sessionConfig.store = new MongoStore({ db: getConnection() });
+            let sessionStore = null;
+            if (this.CONFIGS.serverConfig.dbType == 'mysql') {
+                const MySQLStore = require('express-mysql-session')(expressSession);
+                sessionStore = new MySQLStore(this.CONFIGS.dbConfig);
+            } else {
+                const MongoStore = require('connect-mongo')(expressSession);
+                sessionStore = new MongoStore({ db: getConnection() });
+            }
+            this.CONFIGS.sessionConfig.store = sessionStore;
             this.APP.use(expressSession(this.CONFIGS.sessionConfig));
         }).catch(err => {
             console.log(err);

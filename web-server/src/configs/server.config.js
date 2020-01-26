@@ -1,4 +1,5 @@
 module.exports = {
     db      : true,
-    session : true 
+    session : true,
+    dbType  : 'mysql'
 };

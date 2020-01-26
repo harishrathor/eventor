@@ -1,5 +1,5 @@
-const { MongoClient } = require('mongodb');
-const { dbConfig } = require('@configs');
+
+const { dbConfig, serverConfig } = require('@configs');
 
 function getConnection() {
     if (global.SERVER.DB) {
@@ -32,11 +32,38 @@ function makeConnection() {
                 };
                 
                 SERVER.DB = connection;
-                console.log(`Successfully made DB connection to server.`);
+                console.log(`Successfully made DB(MongoDB) connection to server.`);
                 resolve(connection);
             }
         }
-        MongoClient.connect(dbConfig.URL, onDBConnection.bind(dbConfig, dbConfig.DB_NAME)); 
+        const { MongoClient } = require('mongodb');
+        MongoClient.connect(dbConfig.url, onDBConnection.bind(dbConfig, dbConfig.database)); 
+    });
+    return connectionPromise;
+}
+
+function makeMySQLConnection() {
+    if (connectionPromise) {
+        return connectionPromise;
+    }
+    connectionPromise = new Promise((resolve, reject) => {
+        function onDBConnection(err) {
+            if (err) {
+                console.error('error in connecting mysql db:', err);
+                reject(err);
+            } else {
+                const connectionObj =  {
+                    DB_CLIENT       : connection,
+                    CONNECTION      : connection
+                };
+                SERVER.DB = connectionObj;
+                console.log(`Successfully made DB (MySQL) connection to server.`);
+                resolve(connection);
+            }
+        }
+        const mysql = require('mysql');
+        const connection = mysql.createConnection(dbConfig); 
+        connection.connect(onDBConnection);
     });
     return connectionPromise;
 }
@@ -44,6 +71,6 @@ function makeConnection() {
 module.exports = {
     getConnection,
     getDBClient,
-    makeConnection
+    makeConnection: (serverConfig.dbType == 'mysql' ? makeMySQLConnection : makeConnection)
 }
 ;

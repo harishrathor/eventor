@@ -2,7 +2,7 @@ const { getConnection } = require('@db');
 
 class DBService {
 
-    _runQuery(collectionName, collectionMethod, ...methodArgs) {
+    _runMongoQuery(collectionName, collectionMethod, ...methodArgs) {
         return new Promise((resolve, reject) => {
             getConnection().collection(collectionName, (err, collection) => {
                 if (err) {
@@ -16,13 +16,38 @@ class DBService {
                 }
             });
         });
+    } 
+
+    _runSQLQuery(query) {
+        return new Promise((resolve, reject) => {
+            getConnection().query(query, (err, ...restArgs) => {
+                console.log(err);
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(err, ...restArgs);
+                }
+            });
+        });
+    }
+    
+    runQuery(...args) {
+        if (SERVER.CONFIGS.serverConfig.dbType == 'mysql') {
+            return this._runSQLQuery.apply(this, args);
+        } else {
+            return this._runMongoQuery.apply(this, args);
+        }
     }
 
     insertUser() {
-        return this._runQuery('users', 'insertOne', {
-            firstName: 'Harish',
-            lastName: 'Harish Rathor'
-        });
+        if (SERVER.CONFIGS.serverConfig.dbType == 'mysql') {
+            return this.runQuery(`insert into users(firstName, lastName, age) values('Harish', 'Rathor', 23)`);
+        } else {
+            return this.runQuery('users', 'insertOne', {
+                firstName: 'Harish',
+                lastName: 'Harish Rathor'
+            });
+        }
     }
 }
 
