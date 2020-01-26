@@ -1,0 +1,46 @@
+{
+  "name": "mean-crud-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start-dev-server": "env-cmd -e development nodemon src/server.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harishrathor/mean-crud.git"
+  },
+  "author": "Harish Rathor (harishrathor)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "loadtest": "^3.0.8",
+    "npm-watch": "^0.6.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-mongo": "^2.0.3",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "crypto-js": "^3.1.9-1",
+    "env-cmd": "^9.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "helmet": "^3.18.0",
+    "method-override": "^3.0.0",
+    "module-alias": "^2.2.2",
+    "mongodb": "^3.2.5",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.3.0",
+    "vhost": "^3.0.2",
+    "winston": "^3.2.1",
+    "winston-transport": "^4.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/harishrathor/mean-crud/issues"
+  },
+  "homepage": "https://github.com/harishrathor/mean-crud#readme"
+}
