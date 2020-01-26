@@ -1,5 +1,4 @@
 const PATHS = require('./paths');
-const configs = require('@configs');
 
 const express = require('express');
 const logger = require('morgan');
@@ -8,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const expressSession = require('express-session');
+const MongoStore = require('connect-mongo')(expressSession);
 const app = express();
 
 
@@ -23,9 +24,10 @@ class Server {
         this.APP = app;
         this.EXPRESS = express;
         this.ENV = process.env.NODE_ENV;
-        this.CONFIGS = configs;
+        this.CONFIGS = require('@configs');
         this._registerMiddlwares();
         this._initRouting();
+        this._connectDB();
     }
 
     isDev() {
@@ -38,6 +40,18 @@ class Server {
 
     isStaging() {
         return this.ENV === 'development';
+    }
+
+    _connectDB() {
+        const { makeConnection, getConnection } = require('@db');
+        
+        makeConnection()
+        .then(() => {
+            this.CONFIGS.sessionConfig.store = new MongoStore({ db: getConnection() });
+            this.APP.use(expressSession(this.CONFIGS.sessionConfig));
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     _initRouting() {

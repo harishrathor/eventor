@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/assets/*', (req, res) => {
-    res.sendFile(path.join(SERVER.PATHS.CLIENT_ASSETS, req.url));
+    res.sendFile(path.join(SERVER.PATHS.CLIENT_ASSETS, req.url.replace('/assets', '')));
 });
 
 require('@modules/app/app.module.routing')(APIRouter);
