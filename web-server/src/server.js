@@ -45,16 +45,7 @@ class Server {
         const { makeConnection, getConnection } = require('@db');
         makeConnection()
         .then(() => {
-            let sessionStore = null;
-            if (this.CONFIGS.serverConfig.dbType == 'mysql') {
-                const MySQLStore = require('express-mysql-session')(expressSession);
-                sessionStore = new MySQLStore(this.CONFIGS.dbConfig);
-            } else {
-                const MongoStore = require('connect-mongo')(expressSession);
-                sessionStore = new MongoStore({ db: getConnection() });
-            }
-            this.CONFIGS.sessionConfig.store = sessionStore;
-            this.APP.use(expressSession(this.CONFIGS.sessionConfig));
+            console.log('DB Connection done.');
         }).catch(err => {
             console.log(err);
         });
