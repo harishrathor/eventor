@@ -11,7 +11,8 @@ class DBService {
                     if (!methodArgs) {
                         methodArgs = [];
                     }
-                    methodArgs.push(resolve);
+                    const callback = (error, ...args) => resolve(...args);
+                    methodArgs.push(callback);
                     collection[collectionMethod].apply(collection, methodArgs);
                 }
             });
@@ -25,7 +26,7 @@ class DBService {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(err, ...restArgs);
+                    resolve(...restArgs);
                 }
             });
         });
