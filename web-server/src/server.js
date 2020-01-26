@@ -105,6 +105,11 @@ class Server {
     all(req, res, next) { //Called for all request.
         next(req, res);
     }
+
+    callRequestHanlder(ControllerClass, methodName, ...args) {
+        const controller = new ControllerClass();
+        controller[methodName].apply(controller, args);
+    }
 }
 
 var server = new Server();

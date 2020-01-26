@@ -1,14 +1,27 @@
 const DBService = require('@modules/app/services/db.service');
 class AppController {
 
-    requestHandlerAction(req, res) {
-        const dbService = new DBService();
-        dbService.insertUser().then((response) => {
+    constructor() {
+        this.dbService = new DBService();
+    }
+
+    createUserAction(req, res) {
+        this.dbService.insertUser().then((response) => {
             console.log('User Created.', response);
             res.send({success: true, message: 'User Created.', data: response});
         }).catch(err => {
             console.log('Error in creating user:', err);
             res.send({success: false, message: 'Error in insertig user.', data: err});
+        });
+    }
+
+    getUsersAction(req, res) {
+        this.dbService.getUsers().then((response) => {
+            console.log('User Created.', response);
+            res.send({success: true, message: '', data: response});
+        }).catch(err => {
+            console.log('Error in creating user:', err);
+            res.send({success: false, message: 'Error in fetching users.', data: err});
         });
     }
 }

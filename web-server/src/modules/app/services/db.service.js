@@ -50,6 +50,14 @@ class DBService {
             });
         }
     }
+
+    getUsers() {
+        if (SERVER.CONFIGS.serverConfig.dbType == 'mysql') {
+            return this.runQuery(`select * from users;`);
+        } else {
+            return this.runQuery('users', 'findAll');
+        }
+    }
 }
 
 module.exports = DBService;
