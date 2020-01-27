@@ -81,7 +81,7 @@ class Server {
     }
 
     startServer() {
-        this._serverInstance = this.APP.listen(process.env.PORT, s => console.log(`Server (${this.ENV}) started at port ${process.env.PORT}.`));
+        this._serverInstance = this.APP.listen(process.env.PORT, s => console.log(`Server (${this.ENV}) started at port ${process.env.PORT}. Process id ${process.pid} and Parent process id ${process.ppid}`));
     }
 
     stopServer() {
@@ -100,9 +100,30 @@ class Server {
     }
 }
 
-var server = new Server();
-global.SERVER = server;
-server.initialize();
-server.startServer();
+function startServer() {
+    var server = new Server();
+    global.SERVER = server;
+    server.initialize();
+    server.startServer();
+}
+
+const cluster = require('cluster');
+const os = require('os');
+const noOfCpus = os.cpus().length;
+
+if (cluster.isMaster) {
+    process.on('message', (data) => {
+        console.log('Message recieved in Master:', data);
+    });
+    console.log('Master Started with pid:', process.pid);
+    for (let i = 0; i < noOfCpus; i++) {
+        const worker = cluster.fork();
+        worker.on('message', data => console.log('Message recieved from ', worker.process.pid));
+    }
+} else {
+    startServer();
+    console.log('Worker Process started with pid:', process.pid);
+}
+
 
 

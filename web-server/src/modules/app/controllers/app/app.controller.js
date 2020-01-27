@@ -7,7 +7,6 @@ class AppController {
 
     createUserAction(req, res) {
         this.dbService.insertUser().then((response) => {
-            console.log('User Created.', response);
             res.send({success: true, message: 'User Created.', data: response});
         }).catch(err => {
             console.log('Error in creating user:', err);
@@ -17,7 +16,6 @@ class AppController {
 
     getUsersAction(req, res) {
         this.dbService.getUsers().then((response) => {
-            console.log('User Created.', response);
             res.send({success: true, message: '', data: response});
         }).catch(err => {
             console.log('Error in creating user:', err);
