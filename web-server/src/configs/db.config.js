@@ -11,16 +11,19 @@ if(global.SERVER.isDev()) {
             insecure: true
           };
     } else {
-        dbConfig = {
+       /*  dbConfig = {
             port: 27017,
             host: 'localhost',
             protocol: 'mongodb',
             database: 'mean-crud'
         };
-        dbConfig.url = dbConfig.protocol + '://' + dbConfig.host + ':' + dbConfig.port;
+        dbConfig.url = dbConfig.protocol + '://' + dbConfig.host + ':' + dbConfig.port; */
+       
+        dbConfig.url = "mongodb+srv://harishrathor:indian.19@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
     }
 } else {
-    console.log(`DB configuration not defined for '${SERVER.ENV}' environment.`);
+    dbConfig.url = "mongodb+srv://harishrathor:indian.19@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
+    
 }
 
 module.exports = dbConfig;

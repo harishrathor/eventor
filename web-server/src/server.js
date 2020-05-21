@@ -106,7 +106,7 @@ function startServer() {
     server.initialize();
     server.startServer();
 }
-
+/* 
 const cluster = require('cluster');
 const os = require('os');
 const noOfCpus = os.cpus().length;
@@ -120,10 +120,10 @@ if (cluster.isMaster) {
         const worker = cluster.fork();
         worker.on('message', data => console.log('Message recieved from ', worker.process.pid));
     }
-} else {
+} else { */
     startServer();
-    console.log('Worker Process started with pid:', process.pid);
-}
+   /*  console.log('Worker Process started with pid:', process.pid);
+} */
 
 
 
