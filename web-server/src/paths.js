@@ -1,6 +1,7 @@
 const moduleAlias = require('module-alias');
 const path = require('path');
-const clientRoot = path.resolve('..', 'web-client', 'mean-crud', 'dist', 'mean-crud');
+//const clientRoot = path.resolve('..', 'web-client', 'mean-crud', 'dist', 'mean-crud');
+const clientRoot = path.resolve('..', 'web-client', 'eventor');
 const srcPath = __dirname;
 const serverRoot = path.resolve('..');
 const clientAssets = path.join(clientRoot, 'assets');

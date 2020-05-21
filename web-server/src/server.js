@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const app = express();
 
 class Server {
 
@@ -17,8 +16,7 @@ class Server {
 
     initialize() {
         this.PATHS = PATHS;
-        this.APP = app;
-        this.EXPRESS = express;
+        this.APP = express();
         this.ENV = process.env.NODE_ENV;
         this.CONFIGS = require('@configs');
         this._registerMiddlwares();
@@ -53,9 +51,9 @@ class Server {
     }
 
     _registerMiddlwares() {
-        this.APP.use(this.EXPRESS.static(this.PATHS.CLIENT_ROOT));
-        this.APP.use(this.EXPRESS.static(this.PATHS.CLIENT_ASSETS));
-        this.APP.use(this.EXPRESS.static(this.PATHS.SERVER_ASSETS));
+        this.APP.use(express.static(this.PATHS.CLIENT_ROOT));
+        this.APP.use(express.static(this.PATHS.CLIENT_ASSETS));
+        this.APP.use(express.static(this.PATHS.SERVER_ASSETS));
         this.APP.use(cookieParser());
         this.APP.use(compression());
         this.APP.use(helmet());

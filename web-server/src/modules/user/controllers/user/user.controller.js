@@ -1,4 +1,4 @@
-const DBService = require('@modules/app/services/db.service');
+/* const DBService = require('@modules/app/services/db.service');
 class AppController {
 
     constructor() {
@@ -21,7 +21,13 @@ class AppController {
             console.log('Error in creating user:', err);
             res.send({success: false, message: 'Error in fetching users.', data: err});
         });
-    }
+    } 
 }
 
-module.exports = AppController;
+module.exports = AppController; */
+
+class UserController {
+
+}
+
+module.exports = UserController;

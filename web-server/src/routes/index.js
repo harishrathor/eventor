@@ -1,5 +1,6 @@
-const router = SERVER.EXPRESS.Router();
-const APIRouter = SERVER.EXPRESS.Router();
+const express = require('express');
+const router = express.Router();
+const APIRouter = express.Router();
 const path = require('path');
 
 router.all(SERVER.all);
@@ -12,7 +13,7 @@ router.get('/assets/*', (req, res) => {
     res.sendFile(path.join(SERVER.PATHS.CLIENT_ASSETS, req.url.replace('/assets', '')));
 });
 
-require('@modules/app/app.module.routing')(APIRouter);
+require('@modules/user/user.module.routing')(APIRouter);
 
 router.use('/api', APIRouter);
 

@@ -70,7 +70,7 @@ function makeConnection() {
                 CONNECTION      : mongoose
             };
             
-            SERVER.DB = mongoose;
+            SERVER.DB = connection;
             console.log(`Successfully made DB(MongoDB) connection to server.`);
             resolve(connection);
         });
