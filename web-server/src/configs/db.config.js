@@ -19,10 +19,10 @@ if(global.SERVER.isDev()) {
         };
         dbConfig.url = dbConfig.protocol + '://' + dbConfig.host + ':' + dbConfig.port; */
        
-        dbConfig.url = "mongodb+srv://harishrathor:indian.19@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
+        dbConfig.url = "mongodb+srv://harishrathor:${{secrets.MONGO_SERVER_PASSWORD_1}}@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
     }
 } else {
-    dbConfig.url = "mongodb+srv://harishrathor:indian.19@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
+    dbConfig.url = "mongodb+srv://harishrathor:${{secrets.MONGO_SERVER_PASSWORD_1}}@cluster0-90bt6.mongodb.net/eventor?retryWrites=true&w=majority";
     
 }
 
