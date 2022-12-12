@@ -29,7 +29,7 @@
     "cors": "^2.8.5",
     "crypto-js": "^3.1.9-1",
     "env-cmd": "^9.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
